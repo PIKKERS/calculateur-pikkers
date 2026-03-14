@@ -6,7 +6,6 @@
 <title>Estimez vos revenus PIKKERS</title>
 
 <style>
-
 body{
 background:#000;
 color:white;
@@ -31,6 +30,7 @@ text-align:center;
 border-radius:6px;
 border:none;
 margin-top:10px;
+margin-bottom:10px;
 }
 
 .result{
@@ -79,6 +79,12 @@ border-radius:8px;
 cursor:pointer;
 }
 
+.label{
+display:block;
+font-size:20px;
+margin-top:20px;
+margin-bottom:5px;
+}
 </style>
 </head>
 
@@ -88,11 +94,15 @@ cursor:pointer;
 
 <h1>Estimez vos revenus chez PIKKERS</h1>
 
-<p style="font-size:22px;">
+<label class="label" for="ca">
 Combien de chiffre d'affaires faites-vous par semaine ?
-</p>
-
+</label>
 <input type="number" id="ca" placeholder="Ex : 1200">
+
+<label class="label" for="vehicule">
+Quels sont vos frais véhicule par semaine ?
+</label>
+<input type="number" id="vehicule" placeholder="Ex : 350" value="350">
 
 <div class="result" id="result"></div>
 
@@ -107,7 +117,7 @@ Combien de chiffre d'affaires faites-vous par semaine ?
 <p>✔ Statut salarié avec fiche de paie</p>
 
 <p style="margin-top:15px; font-weight:bold;">
-➡ Le montant affiché correspond à votre revenu net estimé réellement perçu.
+➡ Le montant affiché correspond à votre revenu net estimé après frais véhicule.
 </p>
 
 <p class="note">
@@ -124,26 +134,26 @@ Rejoindre la flotte
 </div>
 
 <script>
+function calculerRevenus() {
+  let ca = parseFloat(document.getElementById("ca").value) || 0;
+  let vehicule = parseFloat(document.getElementById("vehicule").value) || 0;
 
-document.getElementById("ca").addEventListener("input", function(){
+  let semaineBrutEstime = ca * 0.70;
+  let semaineNetApresVehicule = semaineBrutEstime - vehicule;
+  let moisNetApresVehicule = semaineNetApresVehicule * 4.33;
 
-let ca = parseFloat(this.value) || 0;
+  if (ca <= 0) {
+    document.getElementById("result").innerHTML = "";
+    return;
+  }
 
-let semaine = ca * 0.70;
-
-let mois = semaine * 4.33;
-
-if(ca <= 0){
-document.getElementById("result").innerHTML = "";
-return;
+  document.getElementById("result").innerHTML =
+    Math.round(semaineNetApresVehicule) + " € net estimé / semaine<br>" +
+    Math.round(moisNetApresVehicule) + " € net estimé / mois";
 }
 
-document.getElementById("result").innerHTML =
-Math.round(semaine) + " € net / semaine<br>" +
-Math.round(mois) + " € net / mois";
-
-});
-
+document.getElementById("ca").addEventListener("input", calculerRevenus);
+document.getElementById("vehicule").addEventListener("input", calculerRevenus);
 </script>
 
 </body>
