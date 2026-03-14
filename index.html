@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Estimez vos revenus PIKKERS</title>
+
+<style>
+body{
+background:#000;
+color:white;
+font-family:Arial;
+text-align:center;
+padding:60px;
+}
+
+.box{
+background:#111;
+padding:40px;
+border-radius:12px;
+max-width:500px;
+margin:auto;
+}
+
+input{
+padding:12px;
+font-size:20px;
+width:200px;
+text-align:center;
+border-radius:6px;
+border:none;
+}
+
+.result{
+margin-top:30px;
+font-size:32px;
+font-weight:bold;
+}
+
+button{
+margin-top:30px;
+background:#0b7a53;
+border:none;
+color:white;
+padding:14px 28px;
+font-size:22px;
+border-radius:8px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h1>Estimez vos revenus chez PIKKERS</h1>
+
+<p>Combien de chiffre d'affaires faites-vous par semaine ?</p>
+
+<input type="number" id="ca" placeholder="Ex : 1200">
+
+<div class="result" id="result"></div>
+
+<button onclick="location.href='https://pikkers.fr'">
+Rejoindre la flotte
+</button>
+
+</div>
+
+<script>
+
+document.getElementById("ca").addEventListener("input", function(){
+
+let ca = this.value;
+
+let semaine = ca * 0.70;
+
+let mois = semaine * 4;
+
+document.getElementById("result").innerHTML =
+Math.round(semaine) + " € net / semaine<br>" +
+Math.round(mois) + " € net / mois";
+
+});
+
+</script>
+
+</body>
+</html>
