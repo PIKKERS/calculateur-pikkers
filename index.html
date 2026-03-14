@@ -5,46 +5,79 @@
 <title>Estimez vos revenus PIKKERS</title>
 
 <style>
+
 body{
 background:#000;
 color:white;
-font-family:Arial;
+font-family:Arial, sans-serif;
 text-align:center;
-padding:60px;
+padding:50px 20px;
 }
 
 .box{
 background:#111;
 padding:40px;
 border-radius:12px;
-max-width:500px;
+max-width:650px;
 margin:auto;
 }
 
 input{
 padding:12px;
 font-size:20px;
-width:200px;
+width:220px;
 text-align:center;
 border-radius:6px;
 border:none;
+margin-top:10px;
 }
 
 .result{
 margin-top:30px;
-font-size:32px;
+font-size:34px;
 font-weight:bold;
+line-height:1.4;
+}
+
+.details{
+margin-top:35px;
+background:#1a1a1a;
+padding:25px;
+border-radius:10px;
+text-align:left;
+max-width:500px;
+margin-left:auto;
+margin-right:auto;
+}
+
+.details h3{
+text-align:center;
+margin-bottom:20px;
+}
+
+.details p{
+margin:8px 0;
+font-size:18px;
+}
+
+.note{
+margin-top:20px;
+opacity:0.8;
+font-size:15px;
+text-align:center;
 }
 
 button{
-margin-top:30px;
+margin-top:35px;
 background:#0b7a53;
 border:none;
 color:white;
 padding:14px 28px;
 font-size:22px;
 border-radius:8px;
+cursor:pointer;
 }
+
 </style>
 </head>
 
@@ -54,11 +87,34 @@ border-radius:8px;
 
 <h1>Estimez vos revenus chez PIKKERS</h1>
 
-<p>Combien de chiffre d'affaires faites-vous par semaine ?</p>
+<p style="font-size:22px;">
+Combien de chiffre d'affaires faites-vous par semaine ?
+</p>
 
 <input type="number" id="ca" placeholder="Ex : 1200">
 
 <div class="result" id="result"></div>
+
+<div class="details">
+
+<h3>Ce que comprend déjà votre estimation</h3>
+
+<p>✔ Cotisations sociales déjà déduites</p>
+<p>✔ TVA déjà collectée et gérée</p>
+<p>✔ Frais de service PIKKERS déjà inclus</p>
+<p>✔ Gestion administrative incluse</p>
+<p>✔ Statut salarié avec fiche de paie</p>
+
+<p style="margin-top:15px; font-weight:bold;">
+➡ Le montant affiché correspond à votre revenu net estimé réellement perçu.
+</p>
+
+<p class="note">
+Estimation indicative basée sur les revenus moyens observés.  
+Le revenu final dépend de votre activité réelle.
+</p>
+
+</div>
 
 <button onclick="location.href='https://pikkers.fr'">
 Rejoindre la flotte
@@ -70,11 +126,16 @@ Rejoindre la flotte
 
 document.getElementById("ca").addEventListener("input", function(){
 
-let ca = this.value;
+let ca = parseFloat(this.value) || 0;
 
 let semaine = ca * 0.70;
 
-let mois = semaine * 4;
+let mois = semaine * 4.33;
+
+if(ca <= 0){
+document.getElementById("result").innerHTML = "";
+return;
+}
 
 document.getElementById("result").innerHTML =
 Math.round(semaine) + " € net / semaine<br>" +
