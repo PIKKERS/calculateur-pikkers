@@ -4,132 +4,346 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Estimez vos revenus PIKKERS</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
-body{
-background:#000;
-color:white;
-font-family:Arial, sans-serif;
-text-align:center;
-padding:50px 20px;
-}
+  :root {
+    --green: #00E5A0;
+    --green-glow: rgba(0, 229, 160, 0.15);
+    --green-dark: #00b87e;
+    --bg: #050505;
+    --card: #0e0e0e;
+    --border: rgba(0, 229, 160, 0.2);
+    --text: #ffffff;
+    --muted: rgba(255,255,255,0.5);
+  }
 
-.box{
-background:#111;
-padding:40px;
-border-radius:12px;
-max-width:650px;
-margin:auto;
-}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-input{
-padding:12px;
-font-size:20px;
-width:220px;
-text-align:center;
-border-radius:6px;
-border:none;
-margin-top:10px;
-margin-bottom:10px;
-}
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    position: relative;
+    overflow-x: hidden;
+  }
 
-.result{
-margin-top:30px;
-font-size:34px;
-font-weight:bold;
-line-height:1.4;
-}
+  body::before {
+    content: '';
+    position: fixed;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(0,229,160,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
 
-.details{
-margin-top:35px;
-background:#1a1a1a;
-padding:25px;
-border-radius:10px;
-text-align:left;
-max-width:500px;
-margin-left:auto;
-margin-right:auto;
-}
+  .container {
+    max-width: 580px;
+    width: 100%;
+    position: relative;
+  }
 
-.details h3{
-text-align:center;
-margin-bottom:20px;
-}
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
 
-.details p{
-margin:8px 0;
-font-size:18px;
-}
+  .logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 18px;
+    letter-spacing: 4px;
+    color: var(--green);
+    margin-bottom: 24px;
+    display: block;
+  }
 
-.note{
-margin-top:20px;
-opacity:0.8;
-font-size:15px;
-text-align:center;
-}
+  .header h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(36px, 8vw, 56px);
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+  }
 
-button{
-margin-top:35px;
-background:#0b7a53;
-border:none;
-color:white;
-padding:14px 28px;
-font-size:22px;
-border-radius:8px;
-cursor:pointer;
-}
+  .header h1 span {
+    color: var(--green);
+    display: block;
+  }
 
-.label{
-display:block;
-font-size:20px;
-margin-top:20px;
-margin-bottom:5px;
-}
+  .header p {
+    margin-top: 12px;
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--green), transparent);
+  }
+
+  .input-group {
+    margin-bottom: 24px;
+  }
+
+  .input-group:last-of-type { margin-bottom: 0; }
+
+  label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .input-wrapper { position: relative; }
+
+  input[type="number"] {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    color: white;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    padding: 16px 52px 16px 20px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -moz-appearance: textfield;
+  }
+
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+  input[type="number"]:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px var(--green-glow);
+  }
+
+  .input-suffix {
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--green);
+  }
+
+  .result-card {
+    background: var(--green-glow);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    text-align: center;
+    margin-bottom: 20px;
+    display: none;
+    animation: fadeIn 0.4s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .result-card.visible { display: block; }
+
+  .result-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 8px;
+  }
+
+  .result-amount {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: clamp(52px, 12vw, 80px);
+    line-height: 1;
+    color: var(--green);
+    letter-spacing: -2px;
+  }
+
+  .result-period {
+    font-size: 16px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .result-divider {
+    width: 1px;
+    height: 40px;
+    background: var(--border);
+    margin: 20px auto;
+  }
+
+  .result-secondary {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .result-secondary-label {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .checklist {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+
+  .checklist-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.8);
+  }
+
+  .check-item:last-child { border-bottom: none; }
+
+  .check-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--green-glow);
+    border: 1px solid var(--green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 11px;
+    color: var(--green);
+  }
+
+  .note {
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+
+  .btn {
+    display: block;
+    width: 100%;
+    background: var(--green);
+    color: #050505;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 22px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 18px 28px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+  }
+
+  .btn:hover {
+    background: #00ffb3;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 30px rgba(0, 229, 160, 0.3);
+  }
+
+  .btn:active { transform: translateY(0); }
 </style>
 </head>
 
 <body>
-  
-<div class="box">
+<div class="container">
 
-<h1>Estimez vos revenus chez PIKKERS</h1>
+  <div class="header">
+    <span class="logo">PIKKERS</span>
+    <h1>Estimez vos<span>revenus nets</span></h1>
+    <p>Calcul basé sur votre chiffre d'affaires réel</p>
+  </div>
 
-<label class="label" for="ca">
-Combien de chiffre d'affaires faites-vous par semaine ?
-</label>
-<input type="number" id="ca" placeholder="Ex : 1200">
+  <div class="card">
+    <div class="input-group">
+      <label>Chiffre d'affaires / semaine</label>
+      <div class="input-wrapper">
+        <input type="number" id="ca" placeholder="1200">
+        <span class="input-suffix">€</span>
+      </div>
+    </div>
+    <div class="input-group">
+      <label>Frais véhicule / semaine</label>
+      <div class="input-wrapper">
+        <input type="number" id="vehicule" value="350">
+        <span class="input-suffix">€</span>
+      </div>
+    </div>
+  </div>
 
-<label class="label" for="vehicule">
-Quels sont vos frais véhicule par semaine ?
-</label>
-<input type="number" id="vehicule" placeholder="Ex : 350" value="350">
+  <div class="result-card" id="resultCard">
+    <div class="result-label">Votre revenu net estimé</div>
+    <div class="result-amount" id="resultSemaine">—</div>
+    <div class="result-period">par semaine</div>
+    <div class="result-divider"></div>
+    <div class="result-secondary" id="resultMois">—</div>
+    <div class="result-secondary-label">par mois</div>
+  </div>
 
-<div class="result" id="result"></div>
+  <div class="checklist">
+    <div class="checklist-title">Déjà inclus dans l'estimation</div>
+    <div class="check-item"><span class="check-icon">✓</span> Cotisations sociales déduites</div>
+    <div class="check-item"><span class="check-icon">✓</span> TVA collectée et gérée</div>
+    <div class="check-item"><span class="check-icon">✓</span> Frais de service PIKKERS inclus</div>
+    <div class="check-item"><span class="check-icon">✓</span> Gestion administrative incluse</div>
+    <div class="check-item"><span class="check-icon">✓</span> Statut salarié CDI avec fiche de paie</div>
+  </div>
 
-<div class="details">
+  <p class="note">Estimation indicative basée sur les revenus moyens observés.<br>Le revenu final dépend de votre activité réelle.</p>
 
-<h3>Ce que comprend déjà votre estimation</h3>
-
-<p>✔ Cotisations sociales déjà déduites</p>
-<p>✔ TVA déjà collectée et gérée</p>
-<p>✔ Frais de service PIKKERS déjà inclus</p>
-<p>✔ Gestion administrative incluse</p>
-<p>✔ Statut salarié avec fiche de paie</p>
-
-<p style="margin-top:15px; font-weight:bold;">
-➡ Le montant affiché correspond à votre revenu net estimé après frais véhicule.
-</p>
-
-<p class="note">
-Estimation indicative basée sur les revenus moyens observés.  
-Le revenu final dépend de votre activité réelle.
-</p>
-
-</div>
-
-<button onclick="rejoindreFlotte()">
-Rejoindre la flotte
-</button>
+  <button class="btn" onclick="rejoindreFlotte()">Rejoindre la flotte →</button>
 
 </div>
 
@@ -137,34 +351,22 @@ Rejoindre la flotte
 function calculerRevenus() {
   let ca = parseFloat(document.getElementById("ca").value) || 0;
   let vehicule = parseFloat(document.getElementById("vehicule").value) || 0;
-
-  let semaineBrutEstime = ca * 0.70;
-  let semaineNetApresVehicule = semaineBrutEstime - vehicule;
-  let moisNetApresVehicule = semaineNetApresVehicule * 4.33;
-
-  if (ca <= 0) {
-    document.getElementById("result").innerHTML = "";
-    return;
-  }
-
-  document.getElementById("result").innerHTML =
-    Math.round(semaineNetApresVehicule) + " € net estimé / semaine<br>" +
-    Math.round(moisNetApresVehicule) + " € net estimé / mois";
+  let semaine = Math.round((ca * 0.70) - vehicule);
+  let mois = Math.round(semaine * 4.33);
+  const card = document.getElementById("resultCard");
+  if (ca <= 0) { card.classList.remove("visible"); return; }
+  document.getElementById("resultSemaine").textContent = semaine.toLocaleString('fr-FR') + " €";
+  document.getElementById("resultMois").textContent = mois.toLocaleString('fr-FR') + " €";
+  card.classList.add("visible");
 }
 
 function rejoindreFlotte() {
   let ca = parseFloat(document.getElementById("ca").value) || 0;
   let vehicule = parseFloat(document.getElementById("vehicule").value) || 0;
-
   let semaine = Math.round((ca * 0.70) - vehicule);
   let mois = Math.round(semaine * 4.33);
-
   let tallyUrl = "https://tally.so/r/Pd81VB";
-
-  if (semaine > 0) {
-    tallyUrl += "?revenu_semaine=" + semaine + "&revenu_mois=" + mois;
-  }
-
+  if (semaine > 0) tallyUrl += "?revenu_semaine=" + semaine + "&revenu_mois=" + mois;
   window.location.href = tallyUrl;
 }
 
