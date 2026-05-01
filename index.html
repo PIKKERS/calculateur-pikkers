@@ -127,7 +127,7 @@ Le revenu final dépend de votre activité réelle.
 
 </div>
 
-<button onclick="location.href='https://pikkers.fr'">
+<button onclick="rejoindreFlotte()">
 Rejoindre la flotte
 </button>
 
@@ -150,6 +150,22 @@ function calculerRevenus() {
   document.getElementById("result").innerHTML =
     Math.round(semaineNetApresVehicule) + " € net estimé / semaine<br>" +
     Math.round(moisNetApresVehicule) + " € net estimé / mois";
+}
+
+function rejoindreFlotte() {
+  let ca = parseFloat(document.getElementById("ca").value) || 0;
+  let vehicule = parseFloat(document.getElementById("vehicule").value) || 0;
+
+  let semaine = Math.round((ca * 0.70) - vehicule);
+  let mois = Math.round(semaine * 4.33);
+
+  let tallyUrl = "https://tally.so/r/Pd81VB";
+
+  if (semaine > 0) {
+    tallyUrl += "?revenu_semaine=" + semaine + "&revenu_mois=" + mois;
+  }
+
+  window.location.href = tallyUrl;
 }
 
 document.getElementById("ca").addEventListener("input", calculerRevenus);
